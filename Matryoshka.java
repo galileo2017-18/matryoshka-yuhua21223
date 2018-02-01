@@ -5,15 +5,24 @@ import java.util.List;
 public class Matryoshka 
 {
 	private Matryoshka innerDoll;	// instance fields
+	private String name;
+	private Color hair;
+	private boolean babushka;
 	
-	public Matryoshka()		// constructor for a Matryoshka
+	public Matryoshka(String name, Color hair, boolean babushka)		// constructor for a Matryoshka
 	{
 		this.innerDoll = null;
+		this.name = name;
+		this.hair = hair;
+		this.babushka = babushka;
 	}
 	
-	public Matryoshka(Matryoshka inner)		// second constructor with an inner doll
+	public Matryoshka(Matryoshka inner, String name, Color hair, boolean babushka)		// second constructor with an inner doll
 	{
 		this.innerDoll = inner;
+		this.name = name;
+		this.hair = hair;
+		this.babushka = babushka;
 	}
 	
 	// hasInnerDoll - returns true if this has an inner doll
@@ -41,6 +50,50 @@ public class Matryoshka
 	
 	//Matryoshka lab part 1
 	//DO PART 1 HERE
+	public int howManyWearingBabushkas() {
+	    if (this.innerDoll == null && babushka == true) {
+	        return 1;
+	    }
+	    else if (this.innerDoll = null && babushka == false) {
+	        return 0;
+	    }
+	    else if (this.innerDoll != null && babushka == true) {
+	        return 1 + innerDoll.howManyWearingBabushkas();
+	    }
+	    else {
+	        return 0 + innerDoll.howManyWearingBabushkas();
+	    }
+	}
+	
+	public int redHeadCount() {
+		if(!hasInnerDoll && hair == Color.RED) {
+			return 1;
+		}
+		else if (!hasInnerDoll && hair != Color.RED) {
+			return 0;
+		}
+		else if (hair == Color.RED) {
+			return 1 + innerDoll.redHeadCount();
+		}
+		else {
+			return 0 + innerDoll.redHeadCount();
+		}
+	}
+	
+	public String lastName() {
+	    if (hasInnerDoll() == false) {
+	        return name;
+	    }
+	    String otherName = innerDoll.lastName()
+	    if (name.compareTo(otherName) > 0) {
+	        return name;
+	    }
+	    else {
+	        return otherName;
+	    }
+	}
+	
+	
 	
 	public int whileHowManyDolls()
 	{
@@ -86,26 +139,45 @@ public class Matryoshka
 	
 	
 	
-	//Matryoshka lab part 2
+    //Matryoshka lab part 2
 	
 	public static int recursiveDollCount(List<Matryoshka> dollList) {
-		
+		return rdcHelper(0, dollList);
 	}
 	
 	public static int rdcHelper(int index, List<Matryoshka> list) {
-		
+		if (index >= list.size()) {
+			return 0;
+		}
+		else {
+			return list.get(index).howManyDolls() + rdcHelper(index + 1, list);
+		}
 	}
 	
 	public static int whileLoopDollCount(List<Matryoshka> dollList) {
-		
+		int count = 0;
+		int index = 0;
+		while (index < dollList.size()) {
+			count += dollList.get(index).howManyDolls();
+			index += 1;
+		}
+		return count;
 	}
 	
 	public static int forLoopDollCount(List<Matryoshka> dollList) {
-		
+		int count = 0;
+		for (int index = 0; index < dollList.size(), index += 1) {
+			count += dollList.get(index).howManyDolls();
+		}
+		return count;
 	}
 	
 	public static int forEachLoopDollCount(List<Matryoshka> dollList) {
-		
+		int count = 0;
+		for (Matryoshka doll : dollList) {
+			count += doll.howManyDolls();
+		}
+		return count;
 	}
 	
 }
